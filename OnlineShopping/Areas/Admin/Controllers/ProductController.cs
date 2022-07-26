@@ -22,9 +22,13 @@ namespace OnlineShopping.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index (decimal lowAmount, decimal largeAmount)
+        public IActionResult Index (decimal? lowAmount, decimal? largeAmount)
         {
-            var products = _db.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).Where(c => c.Price >= lowAmount && c.Price <= largeAmount);
+            var products = _db.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).Where(c => c.Price >= lowAmount && c.Price <= largeAmount).ToList();
+            if (lowAmount==null || largeAmount==null)
+            {
+                 products = _db.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).ToList();
+            }
             return View(products);
         }
         [HttpGet]
