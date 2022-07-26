@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-OnlineShopping-ABB140E4-0A5D-4A19-9F19-6A5ECC6DCB18</UserSecretsId>
   </PropertyGroup>
@@ -22,7 +22,6 @@
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Controllers\" />
-    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>
