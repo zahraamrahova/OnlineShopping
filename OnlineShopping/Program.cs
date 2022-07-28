@@ -13,6 +13,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -32,7 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
