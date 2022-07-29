@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopping.Data;
 using OnlineShopping.Models;
 using OnlineShopping.Utility;
 
 namespace OnlineShopping.Areas.Customer.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Area("Customer")]
     public class OrderController : Controller
     {
