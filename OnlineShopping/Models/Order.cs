@@ -4,6 +4,10 @@ namespace OnlineShopping.Models
 {
     public class Order
     {
+        public Order()
+        {
+            OrderDetails = new List<OrderDetail>();
+        }
         public int Id { get; set; }
         [Display(Name="Order No")]
         public string OrderNo { get; set; }

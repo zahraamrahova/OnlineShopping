@@ -4,6 +4,7 @@ using OnlineShopping.Data;
 using OnlineShopping.Models;
 using OnlineShopping.Utility;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace OnlineShopping.Controllers
 {
@@ -19,9 +20,9 @@ namespace OnlineShopping.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            return View(_db.Products.Include(c=>c.ProductTypes).Include(c=>c.SpecialTag).ToList());
+            return View(_db.Products.Include(c=>c.ProductTypes).Include(c=>c.SpecialTag).ToList().ToPagedList(pageNumber:page??1, pageSize:6));
         }
 
         public IActionResult Privacy()

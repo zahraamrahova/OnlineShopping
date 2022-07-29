@@ -1,4 +1,7 @@
-﻿@model IEnumerable<OnlineShopping.Models.Product>
+﻿@using OnlineShopping.Models;
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<Product>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -27,4 +30,7 @@
             </div>
             </div>
     }
+</div>
+<div>
+    @Html.PagedListPager(Model,c=>Href("~/Customer/Home/Index?page="+c),PagedListRenderOptions.PageNumbersOnly)
 </div>
