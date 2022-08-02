@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopping.Data;
 using OnlineShopping.Models;
 
 namespace OnlineShopping.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class ProductTypesController : Controller
     {
@@ -13,6 +15,7 @@ namespace OnlineShopping.Areas.Admin.Controllers
         {
             _db = db;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(_db.ProductTypes.ToList());

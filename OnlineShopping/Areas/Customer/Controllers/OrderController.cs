@@ -34,7 +34,7 @@ namespace OnlineShopping.Areas.Customer.Controllers
             }
             anOrder.OrderNo = GetOrderNo();
             _db.Orders.Add(anOrder);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             HttpContext.Session.Set("products", null);
             return View();
         }

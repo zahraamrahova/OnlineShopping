@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OnlineShopping.Data;
+using OnlineShopping.Models;
 
 namespace OnlineShopping.Areas.Identity.Pages.Account
 {
@@ -21,11 +23,15 @@ namespace OnlineShopping.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private UserManager<IdentityUser> _userManager;
+        private ApplicationDbContext _db;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager, ApplicationDbContext db )
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager; 
+            _db = db;
         }
 
         /// <summary>
@@ -114,6 +120,16 @@ namespace OnlineShopping.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var userInfo = _db.ApplicationUSers.FirstOrDefault(c => c.UserName.ToLower() == Input.Email.ToLower());
+                    var roleInfo = (from ur in _db.UserRoles join r in _db.Roles on ur.RoleId equals r.Id where ur.UserId == userInfo.Id select new SessionUserVM()
+                    {
+                        UserName = Input.Email,
+                        RoleName = r.Name
+                    }).FirstOrDefault();
+                    if (roleInfo != null)
+                    {
+                        HttpContext.Session.SetString(key: "roleName", value: roleInfo.RoleName);
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
